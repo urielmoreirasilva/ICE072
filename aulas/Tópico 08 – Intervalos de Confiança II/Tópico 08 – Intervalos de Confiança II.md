@@ -1,3 +1,9 @@
+---
+layout: default
+title: "Tópico 08 – Intervalos de Confiança II"
+parent: "Aulas"
+nav_order: 8
+---
 # Tópico 08 – Intervalos de Confiança II [<img src="https://raw.githubusercontent.com/urielmoreirasilva/ICE072/main/aulas/T%C3%B3pico%2008%20%E2%80%93%20Intervalos%20de%20Confian%C3%A7a%20II/images/colag_logo.svg" style="float: right; margin-right: 0%; vertical-align: middle; width: 6.5%;">](https://colab.research.google.com/github/urielmoreirasilva/ICE072/blob/main/aulas/T%C3%B3pico%2008%20%E2%80%93%20Intervalos%20de%20Confian%C3%A7a%20II/T%C3%B3pico%2008%20%E2%80%93%20Intervalos%20de%20Confian%C3%A7a%20II.ipynb) [<img src="https://raw.githubusercontent.com/urielmoreirasilva/ICE072/main/aulas/T%C3%B3pico%2008%20%E2%80%93%20Intervalos%20de%20Confian%C3%A7a%20II/images/github_logo.svg" style="float: right; margin-right: 0%; vertical-align: middle; width: 3.25%;">](https://github.com/urielmoreirasilva/ICE072/blob/main/aulas/T%C3%B3pico%2008%20%E2%80%93%20Intervalos%20de%20Confian%C3%A7a%20II/T%C3%B3pico%2008%20%E2%80%93%20Intervalos%20de%20Confian%C3%A7a%20II.ipynb)
 
 Nessa aula, vamos aprender mais sobre a quantificação da incerteza sobre uma estimativa através de um conceito chave em Estatística: os Intervalos de Confiança.
@@ -59,10 +65,77 @@ my_sample
 ```
 
 
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>TotalWages</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>9033</th>
+      <td>48705</td>
+    </tr>
+    <tr>
+      <th>5749</th>
+      <td>85814</td>
+    </tr>
+    <tr>
+      <th>385</th>
+      <td>194013</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>4295</th>
+      <td>101531</td>
+    </tr>
+    <tr>
+      <th>653</th>
+      <td>176438</td>
+    </tr>
+    <tr>
+      <th>7600</th>
+      <td>64136</td>
+    </tr>
+  </tbody>
+</table>
+<p>500 rows × 1 columns</p>
+</div>
+
+
+
+
 ```python
 sample_median = my_sample['TotalWages'].median()
 sample_median
 ```
+
+
+
+
+    np.float64(73264.5)
+
+
 
 - Nosso problema fundamental é caracterizar a **incerteza** sobre a estimativa fornecida por nossa mediana amostral.
 - Com uma estimativa pontual, o máximo que podemos afirmar é que "a mediana populacional é aproximadamente \\$73,264,50", mas não mais que isso.
@@ -90,11 +163,26 @@ boot_medians
 ```
 
 
+
+
+    array([77659.5, 65712. , 73041.5, ..., 75121. , 65975. , 70236. ],
+          shape=(5000,))
+
+
+
+
 ```python
 ## "Limite inferior": `L`
 L = np.percentile(boot_medians, 2.5)
 L
 ```
+
+
+
+
+    np.float64(65624.5)
+
+
 
 
 ```python
@@ -104,10 +192,24 @@ U
 ```
 
 
+
+
+    np.float64(81341.0)
+
+
+
+
 ```python
 ## Intervalo [L, U]
 [L, U]
 ```
+
+
+
+
+    [np.float64(65624.5), np.float64(81341.0)]
+
+
 
 
 ```python
@@ -116,6 +218,12 @@ plt.plot([L, U], [0, 0], color = 'gold', linewidth = 12, label = '95% percentile
 plt.legend()
 plt.ylabel("Densidade");
 ```
+
+
+    
+![png](T%C3%B3pico%2008%20%E2%80%93%20Intervalos%20de%20Confian%C3%A7a%20II_files/T%C3%B3pico%2008%20%E2%80%93%20Intervalos%20de%20Confian%C3%A7a%20II_12_0.png)
+    
+
 
 - Tomando os percentis 2.5\% e 97.5\% da distribuição bootstrap, construímos então um intervalo que varia de \\$65.624,50 a \\$81,341.00.
 - Podemos dizer então, "com 95\% de confiança", que a mediana dos salários dos funcionários públicos de San Diego está entre \\$65.624,50 e \\$81,341.00.
@@ -180,6 +288,19 @@ many_cis = np.load(io.BytesIO(response.content))
 many_cis
 ```
 
+
+
+
+    array([[72881.5 , 85383.32],
+           [66727.19, 81871.47],
+           [65449.32, 82001.4 ],
+           ...,
+           [64915.5 , 81814.85],
+           [66702.5 , 79711.  ],
+           [67996.76, 82105.84]], shape=(200, 2))
+
+
+
 - Após realizar as simulações acima, vamos visualizar os resultados!
 
 No gráfico abaixo:
@@ -194,6 +315,12 @@ for i, ci in enumerate(many_cis):
     plt.plot([ci[0], ci[1]], [i, i], color = 'gold', linewidth = 2)
 plt.axvline(x = population_median, color = 'blue');
 ```
+
+
+    
+![png](T%C3%B3pico%2008%20%E2%80%93%20Intervalos%20de%20Confian%C3%A7a%20II_files/T%C3%B3pico%2008%20%E2%80%93%20Intervalos%20de%20Confian%C3%A7a%20II_31_0.png)
+    
+
 
 - Note que a _maioria_ dos ICs contém o parâmetro verdadeiro, mas _não todos_!
 
@@ -211,9 +338,22 @@ plt.axvline(x = population_median, color = 'blue');
 ```
 
 
+    
+![png](T%C3%B3pico%2008%20%E2%80%93%20Intervalos%20de%20Confian%C3%A7a%20II_files/T%C3%B3pico%2008%20%E2%80%93%20Intervalos%20de%20Confian%C3%A7a%20II_34_0.png)
+    
+
+
+
 ```python
 count_outside
 ```
+
+
+
+
+    11
+
+
 
 - 11 (ou 5,5\%) dos nossos $M = 200$ ICs não contém o verdadeiro valor do parâmetro.
 - Por outro lado, isso significa que 189/200 (ou 94,5\%) dos ICs, contém sim o parâmetro populacional!
@@ -254,6 +394,20 @@ plt.legend()
 plt.ylabel("Densidade");
 ```
 
+    Nosso IC99% é dado por:
+    [np.float64(63738.965000000004), np.float64(83567.26000000001)]
+    
+    Nosso parâmetro é igual a:
+    78136.0
+    
+    
+
+
+    
+![png](T%C3%B3pico%2008%20%E2%80%93%20Intervalos%20de%20Confian%C3%A7a%20II_files/T%C3%B3pico%2008%20%E2%80%93%20Intervalos%20de%20Confian%C3%A7a%20II_42_1.png)
+    
+
+
 - Se, por outro lado, escolhermos um nível de confiança igual a 80%: 
     - muitas das vezes (~20%) o IC _não conterá_ o verdadeiro valor do parâmetro, o que não é tão bom assim!
 - Porém, ...
@@ -280,6 +434,20 @@ plt.scatter(population_median, 0.000004, color = 'blue', s = 100, label = 'popul
 plt.legend()
 plt.ylabel("Densidade");
 ```
+
+    Nosso IC80% é dado por:
+    [np.float64(67045.0), np.float64(78251.0)]
+    
+    Nosso parâmetro é igual a:
+    78136.0
+    
+    
+
+
+    
+![png](T%C3%B3pico%2008%20%E2%80%93%20Intervalos%20de%20Confian%C3%A7a%20II_files/T%C3%B3pico%2008%20%E2%80%93%20Intervalos%20de%20Confian%C3%A7a%20II_45_1.png)
+    
+
 
 - O _tradeoff_ principal nesse contexto é então entre **confiança e precisão**.
     - Quanto **mais confiante** eu estou de que uma afirmativa é verdadeira, **menos preciso** essa afirmativa será, e vice-versa. 
@@ -356,6 +524,20 @@ plt.legend()
 plt.ylabel("Densidade");
 ```
 
+    Nosso IC95% é dado por:
+    [np.float64(75106.0), np.float64(80771.0)]
+    
+    Nosso parâmetro é igual a:
+    78136.0
+    
+    
+
+
+    
+![png](T%C3%B3pico%2008%20%E2%80%93%20Intervalos%20de%20Confian%C3%A7a%20II_files/T%C3%B3pico%2008%20%E2%80%93%20Intervalos%20de%20Confian%C3%A7a%20II_51_1.png)
+    
+
+
 ### Como _não_ interpretar intervalos de confiança
 
 Fato: intervalos de confiança podem ser complicados de interpretar corretamente.
@@ -391,6 +573,13 @@ print(f'\nNosso parâmetro é igual a:')
 print(population_median)
 ```
 
+    Nosso IC95% é dado por:
+    [np.float64(65639.0), np.float64(81331.0)]
+    
+    Nosso parâmetro é igual a:
+    78136.0
+    
+
 **O IC95% contém 95% de todos os salários da população? Não!** ❌
 
 
@@ -400,6 +589,12 @@ plt.plot([L, U], [0, 0], color = 'gold', linewidth = 12, label = '95% confidence
 plt.legend()
 plt.ylabel("Densidade");
 ```
+
+
+    
+![png](T%C3%B3pico%2008%20%E2%80%93%20Intervalos%20de%20Confian%C3%A7a%20II_files/T%C3%B3pico%2008%20%E2%80%93%20Intervalos%20de%20Confian%C3%A7a%20II_55_0.png)
+    
+
 
 Por outro lado, o IC95% _contém sim_ 95% de todos os salários medianos obtidos pelo bootstrap.
 
@@ -412,6 +607,12 @@ plt.plot([L, U], [0, 0], color = 'gold', linewidth = 12, label = '95% confidence
 plt.legend()
 plt.ylabel("Densidade");
 ```
+
+
+    
+![png](T%C3%B3pico%2008%20%E2%80%93%20Intervalos%20de%20Confian%C3%A7a%20II_files/T%C3%B3pico%2008%20%E2%80%93%20Intervalos%20de%20Confian%C3%A7a%20II_58_0.png)
+    
+
 
 **Então, com 95% de probabilidade o IC95% contém o verdadeiro valor do parâmetro populacional? Também não!** ❌
 

@@ -1,3 +1,9 @@
+---
+layout: default
+title: "Tópico 07 – Bootstrapping"
+parent: "Aulas"
+nav_order: 7
+---
 # Tópico 07 – Bootstrapping [<img src="https://raw.githubusercontent.com/urielmoreirasilva/ICE072/main/aulas/T%C3%B3pico%2007%20%E2%80%93%20Bootstrapping/images/colag_logo.svg" style="float: right; margin-right: 0%; vertical-align: middle; width: 6.5%;">](https://colab.research.google.com/github/urielmoreirasilva/ICE072/blob/main/aulas/T%C3%B3pico%2007%20%E2%80%93%20Bootstrapping/T%C3%B3pico%2007%20%E2%80%93%20Bootstrapping.ipynb) [<img src="https://raw.githubusercontent.com/urielmoreirasilva/ICE072/main/aulas/T%C3%B3pico%2007%20%E2%80%93%20Bootstrapping/images/github_logo.svg" style="float: right; margin-right: 0%; vertical-align: middle; width: 3.25%;">](https://github.com/urielmoreirasilva/ICE072/blob/main/aulas/T%C3%B3pico%2007%20%E2%80%93%20Bootstrapping/T%C3%B3pico%2007%20%E2%80%93%20Bootstrapping.ipynb)
 
 Nessa aula, vamos aprender como quantificar a incerteza sobre nossas estimativas e como aplicar uma técnica pioneira que nos permite, com base em uma única amostra, simular diferentes cenários possíveis para as nossas estimativas.
@@ -182,7 +188,7 @@ population.columns
            'EmployerPopulation', 'LastUpdatedDate', 'EmployerCounty',
            'SpecialDistrictActivities', 'IncludesUnfundedLiability',
            'SpecialDistrictType'],
-          dtype='object')
+          dtype='str')
 
 
 
@@ -267,7 +273,7 @@ plt.ylabel('Densidade');
 
 
     
-![png](T%C3%B3pico%2007%20%E2%80%93%20Bootstrapping_files/T%C3%B3pico%2007%20%E2%80%93%20Bootstrapping_8_0.png)
+![png](T%C3%B3pico%2007%20%E2%80%93%20Bootstrapping_files/T%C3%B3pico%2007%20%E2%80%93%20Bootstrapping_9_0.png)
     
 
 
@@ -395,7 +401,7 @@ sample_median
 
 
 
-    73264.5
+    np.float64(73264.5)
 
 
 
@@ -447,7 +453,7 @@ plt.ylabel("Densidade");
 
 
     
-![png](T%C3%B3pico%2007%20%E2%80%93%20Bootstrapping_files/T%C3%B3pico%2007%20%E2%80%93%20Bootstrapping_29_0.png)
+![png](T%C3%B3pico%2007%20%E2%80%93%20Bootstrapping_files/T%C3%B3pico%2007%20%E2%80%93%20Bootstrapping_30_0.png)
     
 
 
@@ -487,7 +493,7 @@ for i in np.arange(10):
     Resample:  [1 2 3]     Median:  2.0
     Resample:  [1 3 2]     Median:  2.0
     Resample:  [2 1 3]     Median:  2.0
-
+    
 
 - Vamos agora repetir o mesmo experimento, mas dessa vez reamostrando **com reposição**:
 
@@ -509,7 +515,7 @@ for i in np.arange(10):
     Resample:  [2 3 3]     Median:  3.0
     Resample:  [3 3 1]     Median:  3.0
     Resample:  [1 1 3]     Median:  1.0
-
+    
 
 Concluímos com esse exemplo que:
     
@@ -589,7 +595,7 @@ plt.ylabel("Densidade");
 
 
     
-![png](T%C3%B3pico%2007%20%E2%80%93%20Bootstrapping_files/T%C3%B3pico%2007%20%E2%80%93%20Bootstrapping_50_0.png)
+![png](T%C3%B3pico%2007%20%E2%80%93%20Bootstrapping_files/T%C3%B3pico%2007%20%E2%80%93%20Bootstrapping_51_0.png)
     
 
 
@@ -609,7 +615,7 @@ my_sample['TotalWages'].median()
 
 
 
-    73264.5
+    np.float64(73264.5)
 
 
 
@@ -630,7 +636,7 @@ plt.ylabel("Densidade");
 
 
     
-![png](T%C3%B3pico%2007%20%E2%80%93%20Bootstrapping_files/T%C3%B3pico%2007%20%E2%80%93%20Bootstrapping_56_0.png)
+![png](T%C3%B3pico%2007%20%E2%80%93%20Bootstrapping_files/T%C3%B3pico%2007%20%E2%80%93%20Bootstrapping_57_0.png)
     
 
 
@@ -702,7 +708,7 @@ plt.ylabel("Densidade");
 
 
     
-![png](T%C3%B3pico%2007%20%E2%80%93%20Bootstrapping_files/T%C3%B3pico%2007%20%E2%80%93%20Bootstrapping_69_0.png)
+![png](T%C3%B3pico%2007%20%E2%80%93%20Bootstrapping_files/T%C3%B3pico%2007%20%E2%80%93%20Bootstrapping_70_0.png)
     
 
 
@@ -847,7 +853,7 @@ print(boot_medians.max())
     71253.934
     90755.442
     90755.442
-
+    
 
 **Nota**: os percentis acima se referem aos percentis da _distribuição bootstrap_, e não da _distribuição de salários_! 
 
@@ -944,7 +950,7 @@ plt.ylabel("Densidade");
 
 
     
-![png](T%C3%B3pico%2007%20%E2%80%93%20Bootstrapping_files/T%C3%B3pico%2007%20%E2%80%93%20Bootstrapping_99_0.png)
+![png](T%C3%B3pico%2007%20%E2%80%93%20Bootstrapping_files/T%C3%B3pico%2007%20%E2%80%93%20Bootstrapping_100_0.png)
     
 
 
@@ -1030,7 +1036,7 @@ population_max
 
 
 
-    384909
+    np.int64(384909)
 
 
 
@@ -1052,7 +1058,7 @@ plt.ylabel("Densidade");
 
 
     
-![png](T%C3%B3pico%2007%20%E2%80%93%20Bootstrapping_files/T%C3%B3pico%2007%20%E2%80%93%20Bootstrapping_117_0.png)
+![png](T%C3%B3pico%2007%20%E2%80%93%20Bootstrapping_files/T%C3%B3pico%2007%20%E2%80%93%20Bootstrapping_118_0.png)
     
 
 
@@ -1068,7 +1074,7 @@ my_sample['TotalWages'].max()
 
 
 
-    334473
+    np.int64(334473)
 
 
 
