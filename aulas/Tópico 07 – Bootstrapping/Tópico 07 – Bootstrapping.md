@@ -188,7 +188,7 @@ population.columns
            'EmployerPopulation', 'LastUpdatedDate', 'EmployerCounty',
            'SpecialDistrictActivities', 'IncludesUnfundedLiability',
            'SpecialDistrictType'],
-          dtype='str')
+          dtype='object')
 
 
 
@@ -285,14 +285,14 @@ plt.ylabel('Densidade');
 
 
 ```python
-population_median = population['TotalWages'].mean()
+population_median = population['TotalWages'].median()
 population_median
 ```
 
 
 
 
-    np.float64(82015.97833034532)
+    78136.0
 
 
 
@@ -401,7 +401,7 @@ sample_median
 
 
 
-    np.float64(73264.5)
+    73264.5
 
 
 
@@ -493,7 +493,7 @@ for i in np.arange(10):
     Resample:  [1 2 3]     Median:  2.0
     Resample:  [1 3 2]     Median:  2.0
     Resample:  [2 1 3]     Median:  2.0
-    
+
 
 - Vamos agora repetir o mesmo experimento, mas dessa vez reamostrando **com reposição**:
 
@@ -515,7 +515,7 @@ for i in np.arange(10):
     Resample:  [2 3 3]     Median:  3.0
     Resample:  [3 3 1]     Median:  3.0
     Resample:  [1 1 3]     Median:  1.0
-    
+
 
 Concluímos com esse exemplo que:
     
@@ -548,7 +548,7 @@ for i in range(n_resamples):
     resample = my_sample.sample(500, replace = True)
     
     # Calculando a mediana da amostra bootstrap
-    median = resample['TotalWages'].mean()
+    median = resample['TotalWages'].median()
     
     # Salvando o resultado em um array
     boot_medians = np.append(boot_medians, median)
@@ -567,7 +567,7 @@ boot_medians
 
 
 
-    array([84438.12, 78331.71, 80288.7 , ..., 81285.45, 77816.16, 76002.23],
+    array([77659.5, 65712. , 73041.5, ..., 75121. , 65975. , 70236. ],
           shape=(5000,))
 
 
@@ -615,7 +615,7 @@ my_sample['TotalWages'].median()
 
 
 
-    np.float64(73264.5)
+    73264.5
 
 
 
@@ -727,7 +727,7 @@ np.percentile(boot_medians, 0)
 
 
 
-    np.float64(71253.934)
+    np.float64(62109.5)
 
 
 
@@ -740,7 +740,7 @@ np.percentile(boot_medians, 1)
 
 
 
-    np.float64(74610.07153999999)
+    np.float64(64332.0)
 
 
 
@@ -753,7 +753,7 @@ np.percentile(boot_medians, 5)
 
 
 
-    np.float64(76590.21310000001)
+    np.float64(66182.0)
 
 
 
@@ -766,7 +766,7 @@ np.percentile(boot_medians, 10)
 
 
 
-    np.float64(77578.1168)
+    np.float64(67045.0)
 
 
 
@@ -779,7 +779,7 @@ np.percentile(boot_medians, 20)
 
 
 
-    np.float64(78670.576)
+    np.float64(69724.0)
 
 
 
@@ -792,7 +792,7 @@ np.percentile(boot_medians, 50)
 
 
 
-    np.float64(80690.01000000001)
+    np.float64(73342.0)
 
 
 
@@ -805,7 +805,7 @@ np.percentile(boot_medians, 80)
 
 
 
-    np.float64(82765.072)
+    np.float64(75413.0)
 
 
 
@@ -818,7 +818,7 @@ np.percentile(boot_medians, 90)
 
 
 
-    np.float64(83877.19099999999)
+    np.float64(78251.0)
 
 
 
@@ -831,7 +831,7 @@ np.percentile(boot_medians, 100)
 
 
 
-    np.float64(90755.442)
+    np.float64(86541.0)
 
 
 
@@ -849,11 +849,11 @@ print(np.percentile(boot_medians, 100))
 print(boot_medians.max())
 ```
 
-    71253.934
-    71253.934
-    90755.442
-    90755.442
-    
+    62109.5
+    62109.5
+    86541.0
+    86541.0
+
 
 **Nota**: os percentis acima se referem aos percentis da _distribuição bootstrap_, e não da _distribuição de salários_! 
 
@@ -889,7 +889,7 @@ boot_medians
 
 
 
-    array([84438.12, 78331.71, 80288.7 , ..., 81285.45, 77816.16, 76002.23],
+    array([77659.5, 65712. , 73041.5, ..., 75121. , 65975. , 70236. ],
           shape=(5000,))
 
 
@@ -904,7 +904,7 @@ L
 
 
 
-    np.float64(75653.6618)
+    np.float64(65624.5)
 
 
 
@@ -918,7 +918,7 @@ U
 
 
 
-    np.float64(85654.0539)
+    np.float64(81341.0)
 
 
 
@@ -931,7 +931,7 @@ U
 
 
 
-    [np.float64(75653.6618), np.float64(85654.0539)]
+    [np.float64(65624.5), np.float64(81341.0)]
 
 
 
@@ -1036,7 +1036,7 @@ population_max
 
 
 
-    np.int64(384909)
+    384909
 
 
 
@@ -1074,7 +1074,7 @@ my_sample['TotalWages'].max()
 
 
 
-    np.int64(334473)
+    334473
 
 
 
