@@ -47,7 +47,7 @@ plt.ion()
 
 
 
-    <contextlib.ExitStack at 0x1b4a0e58830>
+    <contextlib.ExitStack at 0x779e7f3f3890>
 
 
 
@@ -238,7 +238,7 @@ print('resultados[i] = ', np.sum(sample < grupo)/100)
       39  81 110  52  23 153 187 123  40 156]
     resultados[i] =  10
     resultados[i] =  0.1
-    
+
 
 Vamos ver agora a distribuição empírica de $M = 10{,}000$ amostras da cidade de Talladega. Inicialmente, vamos assumir que a cidade tem uma população de $ n = 100{,}000$ habitantes*.
 
@@ -255,7 +255,8 @@ plt.hist(proporcoes, bins = bins, edgecolor='k')
 plt.xlim(0, 52)
 plt.ylabel(f'Número de Amostras de Tamanho n = {n}')
 plt.xlabel('Número no Grupo')
-plt.plot([8], [0], 'ro', ms=15)
+plt.axvline(8, color = 'black', linewidth = 4, label = 'T_obs = 8')
+plt.legend()
 despine()
 ```
 
@@ -316,7 +317,7 @@ p_value
 ## Declarações
 np.random.seed(42)
 M = int(1e4) # necessário para uso no loop
-n = int(1e5) # tamanho da população
+n = int(1e2) # tamanho da população (amostrada)
 
 ## Loop principal
 results = np.array([])
@@ -329,18 +330,18 @@ results
 
 
 
-    array([25.863, 26.112, 26.015, ..., 25.597, 26.028, 26.118],
-          shape=(10000,))
+    array([25., 33., 29., ..., 33., 25., 23.], shape=(10000,))
 
 
 
 
 ```python
 (pd.DataFrame({"results" : results})
- .plot(kind = 'hist', bins = 50,
-       density = True, ec = 'w', figsize=(10, 5),
+ .plot(kind = 'hist', bins = np.linspace(1, 100, 100) + 0.5,
+       density = True, ec = 'w',
        title='Distribuição Empírica [...]'))
-# plt.axvline(8, color = 'black', linewidth = 4, label = 'T_obs = 0.08')
+plt.xlim(0, 52)
+plt.axvline(8, color = 'black', linewidth = 4, label = 'T_obs = 8')
 plt.legend()
 plt.ylabel("Densidade");
 ```
@@ -359,13 +360,13 @@ np.percentile(results, 5)
 
 
 
-    np.float64(25.766)
+    np.float64(19.0)
 
 
 
 
 ```python
-np.count_nonzero(results < 0.08) 
+np.count_nonzero(results < 8) 
 ```
 
 
@@ -377,7 +378,7 @@ np.count_nonzero(results < 0.08)
 
 
 ```python
-p_value = np.count_nonzero(results < 0.08) / len(results)
+p_value = np.count_nonzero(results < 8) / len(results)
 p_value
 ```
 
@@ -404,7 +405,7 @@ n = int(1e5) # tamanho da população
 ## Loop principal
 results_boot = np.array([])
 for i in np.arange(M):
-    result_boot = np.sum(population.sample(n, replace = True), axis = 0)/n
+    result_boot = 1e2*np.sum(population.sample(n, replace = True), axis = 0)/n
     results_boot = np.append(results_boot, result_boot)
 ```
 
@@ -414,7 +415,7 @@ for i in np.arange(M):
  .plot(kind = 'hist', bins = 50,
        density = True, ec = 'w', figsize=(10, 5),
        title='Distribuição Empírica [...]'))
-# plt.axvline(0.26, color = 'black', linewidth = 4, label = 'p_0 = 0.26')
+# plt.axvline(26, color = 'black', linewidth = 4, label = 'p_0 = 26')
 plt.legend()
 plt.ylabel("Densidade");
 ```
@@ -435,7 +436,7 @@ U = np.percentile(results_boot, 97.5)
 
 
 
-    [np.float64(0.07832), np.float64(0.08166)]
+    [np.float64(7.832), np.float64(8.166)]
 
 
 
@@ -709,7 +710,7 @@ all_distances[0:10] # array com M linhas
 plt.hist(all_distances, bins = 30, edgecolor='k')
 plt.ylabel(f'Numero de Amostras de Tamanho N = {N}')
 plt.xlabel('Total Variation Distance')
-plt.plot([0.14], [0], 'ro', ms=15)
+plt.axvline(0.14, color = 'black', linewidth = 4, label = 'T_obs = 0.14')
 despine()
 ```
 
@@ -900,7 +901,7 @@ np.random.multinomial(100, df['pop'])
 
 
 
-    array([13, 27, 13, 47,  0], dtype=int32)
+    array([13, 27, 13, 47,  0])
 
 
 
@@ -969,7 +970,7 @@ all_distances[0:10] # array com M linhas
 plt.hist(all_distances, bins = 30, edgecolor='k')
 plt.ylabel(f'Numero de Amostras de Tamanho N = {N}')
 plt.xlabel('Total Variation Distance')
-plt.plot([0.14], [0], 'ro', ms=15)
+plt.axvline(0.14, color = 'black', linewidth = 4, label = 'T_obs = 0.14')
 despine()
 ```
 
@@ -981,13 +982,13 @@ despine()
 
 
 ```python
-np.percentile(all_distances, 97.5)
+np.percentile(all_distances, 95)
 ```
 
 
 
 
-    np.float64(0.03370956641431521)
+    np.float64(0.030392291810048176)
 
 
 
@@ -1047,7 +1048,7 @@ def chi2(n, p, q):
     p: vetor de probabilidades de tamanho n
     q: vetor de probabilidades de tamanho n
     '''
-    return n*np.sum( ((p - q)**2) / q )
+    return n*np.sum( ((p - q)**2) / p )
 ```
 
 
@@ -1060,7 +1061,7 @@ T_obs
 
 
 
-    np.float64(310.9978846153846)
+    np.float64(348.07422222222226)
 
 
 
@@ -1111,16 +1112,16 @@ all_distances[0:10] # array com M linhas
 
 
 
-    [np.float64(2.773438235819934),
-     np.float64(5.896726805039254),
-     np.float64(3.2215897309063557),
-     np.float64(2.469124945020287),
-     np.float64(7.405141250399993),
-     np.float64(6.04045306110585),
-     np.float64(7.225591895186383),
-     np.float64(12.878785139961808),
-     np.float64(5.5023426027882945),
-     np.float64(5.993592453957197)]
+    [np.float64(2.6264178838163676),
+     np.float64(6.010094058270245),
+     np.float64(3.282531671382334),
+     np.float64(2.1121562030027237),
+     np.float64(7.6944763070021205),
+     np.float64(6.089623002217643),
+     np.float64(7.987356937116069),
+     np.float64(10.791389462414926),
+     np.float64(4.122428691595931),
+     np.float64(5.680635211949737)]
 
 
 
@@ -1129,7 +1130,7 @@ all_distances[0:10] # array com M linhas
 plt.hist(all_distances, bins = 30, edgecolor='k')
 plt.ylabel(f'Numero de Amostras de Tamanho N = {N}')
 plt.xlabel('Estatística $\\chi^2$ de Pearson')
-plt.plot([T_obs], [0], 'ro', ms=15)
+plt.axvline(348.07, color = 'black', linewidth = 4, label = 'T_obs = 348.07')
 despine()
 ```
 
@@ -1147,7 +1148,7 @@ np.percentile(all_distances, 95)
 
 
 
-    np.float64(10.136629226947521)
+    np.float64(9.393215824220654)
 
 
 
