@@ -7,5 +7,6 @@ remote_theme: just-the-docs/just-the-docs
 ## update LaTeX config (as of 2026-09-14)
 markdown: kramdown
 kramdown:
-  math_engine: null
+  input: GFM
+  math_engine: mathjax
   syntax_highlighter: rouge
