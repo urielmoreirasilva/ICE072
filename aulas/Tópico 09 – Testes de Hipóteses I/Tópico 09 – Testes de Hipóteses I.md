@@ -213,6 +213,7 @@ flips_400.groupby('outcome').count()
     \sum^{212}_{k = 188} {n \choose k} \left(\frac{1}{2}\right)^k \left(\frac{1}{2}\right)^{n-k} \simeq 0.7888 = 78.88\%
 \end{equation*}
 
+
 - No Python, podemos calcular essa probabilidade através da _função de massa de probabilidade_ da _Distribuição Binomial_, `scipy.stats.binom.cdf`.
     - Essa é outra distribuição que você verá nos próximos cursos!
     - Os parâmetros dessa função são o "número de sucessos" `k` $(k = 0, 1, \ldots, n)$, o "número de experimentos" `n` $(n \in \mathbb{N})$ e a "probabilidade de sucesso de cada experimento", `p` $(0 < p < 1)$.
