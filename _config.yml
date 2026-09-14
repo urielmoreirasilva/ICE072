@@ -3,3 +3,9 @@ description: "Repositório para a disciplina ICE072 (Introdução à Ciência de
 baseurl: "/ICE072"
 url: "https://urielmoreirasilva.github.io"
 remote_theme: just-the-docs/just-the-docs
+
+## update LaTeX config (as of 2026-09-14)
+markdown: kramdown
+kramdown:
+  math_engine: mathjax
+  syntax_highlighter: rouge
