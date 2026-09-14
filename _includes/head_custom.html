@@ -4,12 +4,11 @@
       inlineMath: [['$', '$'], ['\\(', '\\)']],
       displayMath: [['$$', '$$'], ['\\[', '\\]']],
       processEscapes: true,
-      processEnvironments: true,
-      tags: 'ams'
+      processEnvironments: true, // Enables raw \begin{equation} ... \end{equation}
+      tags: 'ams'                // Enables automatic equation numbering
     },
     options: {
-      ignoreHtmlClass: 'tex2jax_ignore',
-      processHtmlClass: 'has_jax'
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
     }
   };
 </script>
