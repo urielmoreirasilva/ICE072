@@ -1,13 +1,15 @@
 <script>
-  MathJax = {
+  window.MathJax = {
     tex: {
       inlineMath: [['$', '$'], ['\\(', '\\)']],
       displayMath: [['$$', '$$'], ['\\[', '\\]']],
-      processEnvironments: true, // Allows \begin{equation} without $$
-      tags: 'ams'                // Enables automatic numbering for equation environments
+      processEscapes: true,
+      processEnvironments: true,
+      tags: 'ams'
     },
     options: {
-      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      ignoreHtmlClass: 'tex2jax_ignore',
+      processHtmlClass: 'has_jax'
     }
   };
 </script>
