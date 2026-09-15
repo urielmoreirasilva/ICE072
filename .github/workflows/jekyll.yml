@@ -23,8 +23,8 @@ jobs:
 
       - name: Pre-process Raw LaTeX Environments & Inline Commands
         run: |
-          # 1. Protect inline math backslashes (\! and \!!) from Kramdown stripping
-          find . -type f -name "*.md" -exec sed -i -E 's/\$(\\!+|\\[a-zA-Z]+)\$/\$\\\\\1\$/g' {} +
+          # 1. Protect ONLY inline spacing backslashes (\!, \,, \;, \:) from Kramdown stripping
+          find . -type f -name "*.md" -exec sed -i -E 's/\$(\\[!,;:]+)\$/\$\\\\\1\$/g' {} +
 
           # 2. Safely inject $$ around raw equation environments
           find . -type f -name "*.md" -exec sed -i -E 's/^(\\begin\{equation\*?\})/\$\$\n\1/g' {} +
