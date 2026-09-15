@@ -1,25 +1,27 @@
 <script>
   window.MathJax = {
-    loader: { load: ['[tex]/ams'] },
     tex: {
-      packages: { '[+]': ['ams'] },
       inlineMath: [['$', '$'], ['\\(', '\\)']],
-      displayMath: [
-        ['$$', '$$'],
-        ['\\[', '\\]'],
-        ['\\begin{equation}', '\\end{equation}'],
-        ['\\begin{equation*}', '\\end{equation*}'],
-        ['\\begin{align}', '\\end{align}'],
-        ['\\begin{align*}', '\\end{align*}'],
-        ['\\begin{gather}', '\\end{gather}'],
-        ['\\begin{gather*}', '\\end{gather*}']
-      ],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
       processEscapes: true,
       processEnvironments: true,
       tags: 'ams'
     },
     options: {
-      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      // Allows MathJax v3 to read legacy Kramdown <script type="math/tex"> tags
+      renderActions: {
+        findScript: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = node.type.includes('mode=display');
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
     }
   };
 </script>
