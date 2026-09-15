@@ -209,9 +209,9 @@ flips_400.groupby('outcome').count()
 
 - Omitindo as tecnicalidades, essa probabilidade pode ser calculada como (lembre do Triângulo de Pascal!)
 
-\begin{equation}
+\begin{equation*}
     \sum^{212}_{k = 188} {n \choose k} \left(\frac{1}{2}\right)^k \left(\frac{1}{2}\right)^{n-k} \simeq 0.7888 = 78.88\%
-\end{equation}
+\end{equation*}
 
 - No Python, podemos calcular essa probabilidade através da _função de massa de probabilidade_ da _Distribuição Binomial_, `scipy.stats.binom.cdf`.
     - Essa é outra distribuição que você verá nos próximos cursos!
