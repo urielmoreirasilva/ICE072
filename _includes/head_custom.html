@@ -4,20 +4,20 @@
     tex: {
       packages: { '[+]': ['ams'] },
       inlineMath: [['$', '$'], ['\\(', '\\)']],
-      displayMath: [
-        ['$$', '$$'],
-        ['\\[', '\\]'],
-        ['\\begin{equation}', '\\end{equation}'],
-        ['\\begin{equation*}', '\\end{equation*}'],
-        ['\\begin{align}', '\\end{align}'],
-        ['\\begin{align*}', '\\end{align*}']
-      ],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
       processEscapes: true,
       processEnvironments: true,
       tags: 'ams'
     },
     options: {
       skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    startup: {
+      pageReady: () => {
+        return MathJax.startup.defaultPageReady().then(() => {
+          console.log('MathJax initial typesetting complete');
+        });
+      }
     }
   };
 </script>
