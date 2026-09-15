@@ -3,9 +3,7 @@
     loader: { load: ['[tex]/ams'] },
     tex: {
       packages: { '[+]': ['ams'] },
-      // 1. Recognize both $ and \( for inline math
       inlineMath: [['$', '$'], ['\\(', '\\)']],
-      // 2. Recognize $$, \[, and raw \begin{...} as display math
       displayMath: [
         ['$$', '$$'],
         ['\\[', '\\]'],
@@ -21,10 +19,7 @@
       tags: 'ams'
     },
     options: {
-      // 3. Prevent MathJax from skipping paragraph tags containing TeX
-      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-      ignoreHtmlClass: 'tex2jax_ignore',
-      processHtmlClass: 'has_jax'
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
     }
   };
 </script>

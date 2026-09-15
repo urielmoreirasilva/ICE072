@@ -7,7 +7,5 @@ remote_theme: just-the-docs/just-the-docs
 markdown: kramdown
 kramdown:
   input: GFM
-  math_engine: mathjax
+  math_engine: null
   syntax_highlighter: rouge
-  # Prevents Kramdown from escaping backslashes in math blocks
-  hard_wrap: false
