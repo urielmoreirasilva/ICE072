@@ -11,18 +11,6 @@
     },
     options: {
       skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    },
-    startup: {
-      pageReady: () => {
-        // Walk through all paragraph elements
-        document.querySelectorAll('p').forEach(p => {
-          // If paragraph starts with an unwrapped LaTeX environment
-          if (p.textContent.trim().startsWith('\\begin{')) {
-            p.innerHTML = '$$' + p.innerHTML + '$$';
-          }
-        });
-        return MathJax.startup.defaultPageReady();
-      }
     }
   };
 </script>
