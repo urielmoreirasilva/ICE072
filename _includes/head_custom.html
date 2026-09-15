@@ -3,35 +3,28 @@
     loader: { load: ['[tex]/ams'] },
     tex: {
       packages: { '[+]': ['ams'] },
+      // 1. Recognize both $ and \( for inline math
       inlineMath: [['$', '$'], ['\\(', '\\)']],
-      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      // 2. Recognize $$, \[, and raw \begin{...} as display math
+      displayMath: [
+        ['$$', '$$'],
+        ['\\[', '\\]'],
+        ['\\begin{equation}', '\\end{equation}'],
+        ['\\begin{equation*}', '\\end{equation*}'],
+        ['\\begin{align}', '\\end{align}'],
+        ['\\begin{align*}', '\\end{align*}'],
+        ['\\begin{gather}', '\\end{gather}'],
+        ['\\begin{gather*}', '\\end{gather*}']
+      ],
       processEscapes: true,
       processEnvironments: true,
       tags: 'ams'
     },
     options: {
-      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    },
-    startup: {
-      pageReady: () => {
-        // 1. Scan all paragraph nodes in the document
-        const paragraphs = document.querySelectorAll('p');
-        paragraphs.forEach(p => {
-          let content = p.innerHTML;
-          
-          // Fix Kramdown backslash stripping for math mode spacing like \! \, \;
-          content = content.replace(/\\!/g, '\\!');
-
-          // Detect un-delimited LaTeX environments (equation, equation*, align, gather, etc.)
-          if (content.includes('\\begin{') && !content.includes('$$')) {
-            // Wrap the environment in $$ display math delimiters for MathJax
-            p.innerHTML = '$$' + content + '$$';
-          }
-        });
-
-        // 2. Pass control back to MathJax to perform the actual rendering
-        return MathJax.startup.defaultPageReady();
-      }
+      // 3. Prevent MathJax from skipping paragraph tags containing TeX
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+      ignoreHtmlClass: 'tex2jax_ignore',
+      processHtmlClass: 'has_jax'
     }
   };
 </script>

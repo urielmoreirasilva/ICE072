@@ -9,3 +9,5 @@ kramdown:
   input: GFM
   math_engine: mathjax
   syntax_highlighter: rouge
+  # Prevents Kramdown from escaping backslashes in math blocks
+  hard_wrap: false
