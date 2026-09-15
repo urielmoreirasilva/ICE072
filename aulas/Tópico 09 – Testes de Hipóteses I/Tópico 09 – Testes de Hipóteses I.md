@@ -209,11 +209,9 @@ flips_400.groupby('outcome').count()
 
 - Omitindo as tecnicalidades, essa probabilidade pode ser calculada como (lembre do Triângulo de Pascal!)
 
-$$
 \begin{equation*}
     \sum^{212}_{k = 188} {n \choose k} \left(\frac{1}{2}\right)^k \left(\frac{1}{2}\right)^{n-k} \simeq 0.7888 = 78.88\%
 \end{equation*}
-$$
 
 - No Python, podemos calcular essa probabilidade através da _função de massa de probabilidade_ da _Distribuição Binomial_, `scipy.stats.binom.cdf`.
     - Essa é outra distribuição que você verá nos próximos cursos!
@@ -602,11 +600,9 @@ Note que formalmente sempre frisamos "ao nível $\alpha\%$ de significância", p
 
 - Finalmente, como aqui só existem 2 resultados para um teste de hipóteses (isto é, _ou aceitamos ou rejeitamos_ $H_0$), então $RA$ e $RC$ são _exatamente complementares_, isto é,
 
-<div>
 \begin{equation*}
     T_{obs} \in RA \Leftrightarrow T_{obs} \notin RC
 \end{equation*}
-</div>
 
 e vice-versa.
 
