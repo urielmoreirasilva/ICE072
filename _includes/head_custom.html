@@ -4,22 +4,27 @@
     tex: {
       packages: { '[+]': ['ams'] },
       inlineMath: [['$', '$'], ['\\(', '\\)']],
-      displayMath: [
-        ['$$', '$$'],
-        ['\\[', '\\]'],
-        ['\\begin{equation}', '\\end{equation}'],
-        ['\\begin{equation*}', '\\end{equation*}'],
-        ['\\begin{align}', '\\end{align}'],
-        ['\\begin{align*}', '\\end{align*}'],
-        ['\\begin{gather}', '\\end{gather}'],
-        ['\\begin{gather*}', '\\end{gather*}']
-      ],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
       processEscapes: true,
       processEnvironments: true,
       tags: 'ams'
     },
     options: {
       skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    startup: {
+      pageReady: () => {
+        // 1. Find all <p> paragraphs containing unrendered \begin{...}
+        document.querySelectorAll('p').forEach(p => {
+          const text = p.innerHTML.trim();
+          if (text.startsWith('\\begin{') && text.endsWith('\\end{') || text.includes('\\begin{equation') || text.includes('\\begin{align')) {
+            // 2. Dynamically wrap it in display math delimiters ($$)
+            p.innerHTML = '$$' + text + '$$';
+          }
+        });
+        // 3. Trigger MathJax typeset after wrapping
+        return MathJax.startup.defaultPageReady();
+      }
     }
   };
 </script>
