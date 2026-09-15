@@ -4,8 +4,7 @@ baseurl: "/ICE072"
 url: "https://urielmoreirasilva.github.io"
 remote_theme: just-the-docs/just-the-docs
 
-markdown: kramdown
-kramdown:
-  input: GFM
-  math_engine: mathjax
-  syntax_highlighter: rouge
+# Switch Markdown parser to preserve raw TeX backslashes
+markdown: commonmarkghpages
+commonmark:
+  options: ["FOOTNOTES", "STRIKETHROUGH", "AUTOLINK"]
