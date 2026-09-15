@@ -2,7 +2,8 @@ name: Deploy Jekyll site with Math Jax Fix
 
 on:
   push:
-    branches: ["main"] # Change to "master" if your default branch is master
+    branches: ["main", "master"]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -22,9 +23,9 @@ jobs:
 
       - name: Pre-process Raw LaTeX Environments
         run: |
-          # Automatically wraps unwrapped \begin{equation} blocks in $$ during build
-          find . -name "*.md" -exec sed -i -E 's/^(\\begin\{equation\*?\})/\$\$\n\1/g' {} +
-          find . -name "*.md" -exec sed -i -E 's/(\\end\{equation\*?\})/\1\n\$\$/g' {} +
+          # Safely inject $$ around raw equation environments without modifying inline math
+          find . -type f -name "*.md" -exec sed -i -E 's/^(\\begin\{equation\*?\})/\$\$\n\1/g' {} +
+          find . -type f -name "*.md" -exec sed -i -E 's/(\\end\{equation\*?\})/\1\n\$\$/g' {} +
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -48,9 +49,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        
-        - name: Pre-process Raw LaTeX Environments
-        run: |
-          # Safely inject $$ around raw equation environments without modifying inline math
-          find . -type f -name "*.md" -exec sed -i -E 's/^(\\begin\{equation\*?\})/\$\$\n\1/g' {} +
-          find . -type f -name "*.md" -exec sed -i -E 's/(\\end\{equation\*?\})/\1\n\$\$/g' {} +
