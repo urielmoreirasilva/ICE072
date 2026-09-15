@@ -14,15 +14,22 @@
     },
     startup: {
       pageReady: () => {
-        // 1. Find all <p> paragraphs containing unrendered \begin{...}
-        document.querySelectorAll('p').forEach(p => {
-          const text = p.innerHTML.trim();
-          if (text.startsWith('\\begin{') && text.endsWith('\\end{') || text.includes('\\begin{equation') || text.includes('\\begin{align')) {
-            // 2. Dynamically wrap it in display math delimiters ($$)
-            p.innerHTML = '$$' + text + '$$';
+        // 1. Scan all paragraph nodes in the document
+        const paragraphs = document.querySelectorAll('p');
+        paragraphs.forEach(p => {
+          let content = p.innerHTML;
+          
+          // Fix Kramdown backslash stripping for math mode spacing like \! \, \;
+          content = content.replace(/\\!/g, '\\!');
+
+          // Detect un-delimited LaTeX environments (equation, equation*, align, gather, etc.)
+          if (content.includes('\\begin{') && !content.includes('$$')) {
+            // Wrap the environment in $$ display math delimiters for MathJax
+            p.innerHTML = '$$' + content + '$$';
           }
         });
-        // 3. Trigger MathJax typeset after wrapping
+
+        // 2. Pass control back to MathJax to perform the actual rendering
         return MathJax.startup.defaultPageReady();
       }
     }
